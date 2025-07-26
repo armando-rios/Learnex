@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from '../models/User';
+import User from '../../../shared/models/User';
 import { generateToken } from '../utils/generateToken';
 
 export const login = async (req: Request, res: Response) => {
