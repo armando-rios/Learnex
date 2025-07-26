@@ -1,0 +1,33 @@
+# Node-related
+node_modules/
+*.log
+dist/
+build/
+
+# Turborepo cache
+turbo/
+.turbo/
+
+# Environment files
+.env
+
+# Editor specific
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Dependency lockfiles
+pnpm-lock.yaml
+bun.lock
+yarn.lock
+
+# OpenCode
+.opencode
+
+# Others
+*.local
+*.cache
+*.tmp
+coverage/
+out/
