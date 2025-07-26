@@ -6,7 +6,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/greet/hola:
+ * /greet/hola:
  *   get:
  *     summary: Get Spanish greeting
  *     tags: [Greet]
@@ -29,7 +29,7 @@ router.get('/hola', hola);
 
 /**
  * @swagger
- * /api/greet/hello:
+ * /greet/hello:
  *   get:
  *     summary: Get English greeting
  *     tags: [Greet]
