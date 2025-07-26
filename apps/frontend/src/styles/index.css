@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: light dark;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Font.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@theme {
+  --font-Inter: 'Inter', sans-serif;
+  --color-theme-button-primary: var(--color-theme-button-primary);
+  --color-theme-button-secondary: var(--color-theme-button-secondary);
+  --color-theme-bg-primary: var(--color-theme-bg-primary);
+  --color-theme-bg-secondary: var(--color-theme-bg-secondary);
+  --color-theme-bg-tertiary: var(--color-theme-bg-tertiary);
+  --color-theme-bg-quaternary: var(--color-theme-bg-quaternary);
+  --color-theme-text-primary: var(--color-theme-text-primary);
+  --color-theme-text-secondary: var(--color-theme-text-secondary);
+  --color-theme-text-dark: var(--color-theme-text-dark);
+  --color-theme-text-muted: var(--color-theme-text-muted);
+  --color-theme-border-primary: var(--color-theme-border-primary);
+  --color-theme-border-light: var(--color-theme-border-light);
+  --color-theme-placeholder-primary: var(--color-theme-placeholder-primary);
+  --color-theme-focus-primary: var(--color-theme-focus-primary);
+}
+
+.default {
+  --color-theme-button-primary: #5865f2; /* Botón primario */
+  --color-theme-button-secondary: #4f46e5; /* Botón secundario */
+  --color-theme-button-tertiary: #3b82f6; /* Botón terciario */
+  --color-theme-bg-primary: #36393f; /* Hero - oscuro */
+  --color-theme-bg-secondary: #f8fafc; /* Roles - claro */
+  --color-theme-bg-tertiary: #2f3136; /* Content - oscuro */
+  --color-theme-bg-quaternary: #ffffff; /* Contact - blanco */
+  --color-theme-text-primary: #ffffff; /* Texto claro para fondos oscuros */
+  --color-theme-text-secondary: #b9bbbe; /* Texto secundario para fondos oscuros */
+  --color-theme-text-dark: #1f2937; /* Texto oscuro para fondos claros */
+  --color-theme-text-muted: #6b7280; /* Texto secundario para fondos claros */
+  --color-theme-border-primary: #4f545c; /* Para secciones oscuras */
+  --color-theme-border-light: #e5e7eb; /* Para secciones claras */
+  --color-theme-placeholder-primary: #72767d; /* Para campos de entrada */
+  --color-theme-focus-primary: #5865f2; /* Para elementos enfocados */
+}
