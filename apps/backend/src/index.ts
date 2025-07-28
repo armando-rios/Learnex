@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import authRoutes from './features/auth/routes/auth';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { authMiddleware } from './shared/middleware/authMiddleware';
-import getRoutes from './features/greet/routes/greet';
+import greetRoutes from './features/greet/routes/greet';
 import { connectDB } from './shared/config/database';
 
 dotenv.config();
@@ -19,7 +19,7 @@ const swaggerOptions = {
     openapi: '3.0.0',
     info: {
       title: 'LearnEx API',
-      version: '1.0.0',
+      version: '0.1.0',
       description: 'API documentation for LearnEx',
     },
     servers: [
@@ -54,7 +54,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use(authMiddleware);
-app.use('/api/greet', getRoutes);
+app.use('/api/greet', greetRoutes);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
