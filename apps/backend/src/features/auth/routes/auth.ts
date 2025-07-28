@@ -16,17 +16,17 @@ const router = Router();
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 example: "user@example.com"
- *               password:
- *                 type: string
- *                 example: "yourpassword123"
- *     responses:
+  *             required:
+  *               - login
+  *               - password
+  *             properties:
+  *               login:
+  *                 type: string
+  *                 example: "user@example.com or username"
+  *                 description: "Email or username of the user"
+  *               password:
+  *                 type: string
+  *                 example: "yourpassword123" *     responses:
  *       200:
  *         description: Login successful
  *         content:
@@ -34,10 +34,27 @@ const router = Router();
  *             schema:
  *               type: object
  *               properties:
- *                 token:
- *                   type: string
- *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
- *       401:
+  *                 user:
+  *                   type: object
+  *                   properties:
+  *                     id:
+  *                       type: string
+  *                       example: "507f1f77bcf86cd799439011"
+  *                     fullname:
+  *                       type: string
+  *                       example: "John Doe"
+  *                     username:
+  *                       type: string
+  *                       example: "johndoe"
+  *                     email:
+  *                       type: string
+  *                       example: "john@example.com"
+  *                     image:
+  *                       type: string
+  *                       example: "https://github.com/armando-rios.png"
+  *                 token:
+  *                   type: string
+  *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." *       401:
  *         description: Invalid credentials
  */
 router.post('/profile', login);
@@ -54,21 +71,25 @@ router.post('/profile', login);
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - email
- *               - password
- *               - fullName
- *             properties:
- *               email:
- *                 type: string
- *                 example: "newuser@example.com"
- *               password:
- *                 type: string
- *                 example: "securepassword123"
- *               fullName:
- *                 type: string
- *                 example: "John Doe"
- *     responses:
+  *             required:
+  *               - email
+  *               - username
+  *               - password
+  *               - fullname
+  *             properties:
+  *               email:
+  *                 type: string
+  *                 example: "newuser@example.com"
+  *               username:
+  *                 type: string
+  *                 example: "johndoe"
+  *                 description: "Username (letters, numbers, and hyphens only)"
+  *               password:
+  *                 type: string
+  *                 example: "securepassword123"
+  *               fullname:
+  *                 type: string
+  *                 example: "John Doe" *     responses:
  *       201:
  *         description: User created successfully
  *       400:

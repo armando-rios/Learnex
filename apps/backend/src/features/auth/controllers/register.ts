@@ -4,34 +4,38 @@ import { generateToken } from '../utils/generateToken';
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullname, username, email, password } = req.body;
 
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      res.status(400).json({
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }],
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
         message: 'The user already exists',
       });
-      throw new Error('The user already exists');
     }
 
-    const user = await User.create({
-      fullName,
+    const newUser = await User.create({
+      fullname,
+      username,
       email,
       password,
     });
 
-    if (!user) {
+    if (!newUser) {
       throw new Error('User not created');
     }
 
     return res.status(201).json({
       user: {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-        image: user.image,
+        id: newUser._id,
+        fullname: newUser.fullname,
+        username: newUser.username,
+        email: newUser.email,
+        image: newUser.image,
       },
-      token: generateToken(user._id),
+      token: generateToken(newUser._id),
       message: 'User created successfully',
     });
   } catch (error) {

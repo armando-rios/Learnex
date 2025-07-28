@@ -4,9 +4,11 @@ import { generateToken } from '../utils/generateToken';
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { login, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      $or: [{ email: login }, { username: login }]
+    });
 
     if (!user) {
       throw new Error('User not found');
@@ -21,7 +23,8 @@ export const login = async (req: Request, res: Response) => {
     return res.status(200).json({
       user: {
         id: user._id,
-        fullName: user.fullName,
+        fullname: user.fullname,
+        username: user.username,
         email: user.email,
         image: user.image,
       },
