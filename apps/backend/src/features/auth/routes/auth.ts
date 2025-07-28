@@ -40,7 +40,7 @@ const router = Router();
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', login);
+router.post('/profile', login);
 
 /**
  * @swagger
@@ -57,7 +57,7 @@ router.post('/login', login);
  *             required:
  *               - email
  *               - password
- *               - name
+ *               - fullName
  *             properties:
  *               email:
  *                 type: string
@@ -65,7 +65,7 @@ router.post('/login', login);
  *               password:
  *                 type: string
  *                 example: "securepassword123"
- *               name:
+ *               fullName:
  *                 type: string
  *                 example: "John Doe"
  *     responses:
@@ -77,4 +77,3 @@ router.post('/login', login);
 router.post('/register', register);
 
 export default router;
-
