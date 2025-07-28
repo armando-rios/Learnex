@@ -32,3 +32,7 @@ Para iniciar tanto el frontend como el backend simultáneamente desde la raíz d
 ```bash
 pnpm dev
 ```
+
+---
+
+_Este proyecto es una reimplementación mejorada basada en una versión anterior desarrollada durante una hackathon bajo la organización [Alumnithon](https://github.com/alumnithon)._
