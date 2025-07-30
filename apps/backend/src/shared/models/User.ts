@@ -32,8 +32,6 @@ const userSchema = new Schema<IUser>(
     },
     image: {
       type: String,
-      default: 'https://github.com/armando-rios.png',
-      match: [/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/, 'Por favor ingrese una URL de imagen válida'],
     },
   },
   {
