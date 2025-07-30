@@ -42,11 +42,11 @@ const LoginPage = () => {
         onSubmit={onSubmit}
       >
         <InputField
-          label="Email"
-          type="email"
-          placeholder="Ingresa tu Email"
-          register={register('email')}
-          error={errors.email?.message}
+          label="Email o Nombre de Usuario"
+          type="text"
+          placeholder="Ingresa tu Email o Nombre de Usuario"
+          register={register('identifier')}
+          error={errors.identifier?.message}
           labelColor="text-white"
           inputBg="bg-white"
         />

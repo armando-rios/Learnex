@@ -1,15 +1,15 @@
 import { z } from 'zod';
 
 export const loginSchema = z.object({
-  email: z.string().email('Debe ser un email válido'),
+  identifier: z.string().min(1, 'Debe ser un email o nombre de usuario válido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
 });
 
 export const registerSchema = z.object({
-  name: z.string().min(1, 'El nombre completo es requerido'),
+  fullname: z.string().min(1, 'El nombre completo es requerido'),
+  username: z.string().min(1, 'El nombre de usuario es requerido'),
   email: z.string().email('Email inválido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
-  role: z.enum(['ROLE_USER', 'ROLE_MENTOR']).optional(),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;

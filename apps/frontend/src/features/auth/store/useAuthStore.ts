@@ -12,9 +12,10 @@ interface AuthState {
 
 interface User {
   id: string;
-  name: string;
-  role: 'ROLE_MENTOR' | 'ROLE_USER';
-  avatar?: string;
+  fullname: string;
+  username: string;
+  email: string;
+  image?: string;
 }
 
 const useAuthStore = create<AuthState>((set) => ({

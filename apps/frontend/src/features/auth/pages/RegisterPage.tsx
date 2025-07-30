@@ -2,8 +2,7 @@ import { ButtonPrimary } from '../../../shared/components/Button';
 import AuthLayout from '../components/AuthLayout';
 import InputField from '../components/InputField';
 import { Link } from 'react-router-dom';
-import SelectDropdown from '../components/SelectDropdown';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema } from '../validation/validationSchemas';
 import InputPassword from '../components/InputPassword';
@@ -16,7 +15,6 @@ const RegisterPage = () => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(registerSchema),
@@ -44,11 +42,20 @@ const RegisterPage = () => {
         onSubmit={onSubmit}
       >
         <InputField
+          label="Nombre de Usuario"
+          type="text"
+          placeholder="Ingresa tu nombre de usuario"
+          register={register('username', { required: true })}
+          error={errors.username?.message}
+          labelColor="text-white"
+          inputBg="bg-white"
+        />
+        <InputField
           label="Nombre Completo"
           type="text"
           placeholder="Ingresa tu nombre completo"
-          register={register('name', { required: true })}
-          error={errors.name?.message}
+          register={register('fullname', { required: true })}
+          error={errors.fullname?.message}
           labelColor="text-white"
           inputBg="bg-white"
         />
@@ -70,23 +77,6 @@ const RegisterPage = () => {
           inputBg="bg-white"
         />
 
-        <div>
-          <label className="block text-white font-medium mb-1">
-            Tipo de Usuario
-          </label>
-          <Controller
-            name="role"
-            control={control}
-            defaultValue={undefined}
-            render={({ field }) => (
-              <SelectDropdown
-                value={field.value || ''}
-                onChange={field.onChange}
-                error={errors.role?.message}
-              />
-            )}
-          />
-        </div>
         <ButtonPrimary title="Regístrate" styles="mt-3" />
 
         <p className="flex gap-2 flex-wrap justify-center text-center text-sm text-white mt-2">
