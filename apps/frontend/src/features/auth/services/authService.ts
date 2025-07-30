@@ -10,7 +10,7 @@ export async function loginService(userData: LoginFormData) {
   loginSchema.parse(userData);
   try {
     const response = await api.post('/auth/login', {
-      identifier: userData.identifier,
+      login: userData.identifier,
       password: userData.password,
     });
     localStorage.setItem('authToken', response.data.token);
