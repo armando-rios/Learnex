@@ -7,7 +7,7 @@ export const login = async (req: Request, res: Response) => {
     const { login, password } = req.body;
 
     const user = await User.findOne({
-      $or: [{ email: login }, { username: login }]
+      $or: [{ email: login }, { username: login }],
     });
 
     if (!user) {

@@ -21,7 +21,10 @@ export const register = async (req: Request, res: Response) => {
       username,
       email,
       password,
+      image: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullname)}&background=random&size=128`,
     });
+
+    const token = generateToken(newUser._id);
 
     if (!newUser) {
       throw new Error('User not created');
@@ -35,7 +38,7 @@ export const register = async (req: Request, res: Response) => {
         email: newUser.email,
         image: newUser.image,
       },
-      token: generateToken(newUser._id),
+      token,
       message: 'User created successfully',
     });
   } catch (error) {
