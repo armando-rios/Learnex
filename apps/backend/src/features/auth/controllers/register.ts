@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../../../shared/models/User';
 import { generateToken } from '../utils/generateToken';
+import Profile from '../../../shared/models/Profile';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -24,11 +25,18 @@ export const register = async (req: Request, res: Response) => {
       image: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullname)}&background=random&size=128`,
     });
 
-    const token = generateToken(newUser._id);
-
     if (!newUser) {
       throw new Error('User not created');
     }
+
+    const token = generateToken(newUser._id);
+
+    await Profile.create({
+      userId: newUser._id,
+      fullname: newUser.fullname,
+      username: newUser.username,
+      image: newUser.image,
+    });
 
     return res.status(201).json({
       user: {
