@@ -221,7 +221,7 @@ const Sidebar = () => {
                     setShowProfileMenu(!showProfileMenu);
                   }
                 }}
-                className="flex w-fit md:w-full items-center gap-[0.5rem] p-3 bg-transparent border-[0.025rem] border-[#E5E7EB] text-left text-gray-700 hover:bg-[#F3F4F6] text-[0.9375rem] font-bold rounded mx-auto transition-all duration-200"
+                className="flex w-full items-center gap-[0.5rem] p-3 bg-transparent border-[0.025rem] border-[#E5E7EB] text-left text-gray-700 hover:bg-[#F3F4F6] text-[0.9375rem] font-bold rounded mx-auto transition-all duration-200"
               >
                 <User
                   className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'} rounded-full border border-[#000000]`}
