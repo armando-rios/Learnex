@@ -49,16 +49,14 @@ const Sidebar = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const userType =
-    user?.role?.toLowerCase() === 'role_mentor' ? 'mentor' : 'estudiante';
-  const userName = user?.name;
+  const userName = user?.fullname;
 
-  const menuItemsEstudiante = [
+  const menuItems = [
     {
       name: 'Inicio',
       icon: (
         <Home
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
+          className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
         />
       ),
       path: '/panel',
@@ -67,7 +65,7 @@ const Sidebar = () => {
       name: 'Explorar',
       icon: (
         <Search
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
+          className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
         />
       ),
       path: '/oportunidades',
@@ -76,7 +74,7 @@ const Sidebar = () => {
       name: 'Mentores',
       icon: (
         <Users
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
+          className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
         />
       ),
       path: '/conexiones',
@@ -85,7 +83,7 @@ const Sidebar = () => {
       name: 'Mi Aprendizaje',
       icon: (
         <BookOpen
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
+          className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
         />
       ),
       path: '/aprendizaje',
@@ -94,7 +92,7 @@ const Sidebar = () => {
       name: 'Mis Sesiones',
       icon: (
         <Calendar
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
+          className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
         />
       ),
       path: '/sesiones',
@@ -103,63 +101,12 @@ const Sidebar = () => {
       name: 'Mensajes',
       icon: (
         <MessageCircle
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
+          className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
         />
       ),
       path: '/mensajes',
     },
   ];
-
-  const menuItemsMentor = [
-    {
-      name: 'Inicio',
-      icon: (
-        <Home
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
-        />
-      ),
-      path: '/panel',
-    },
-    {
-      name: 'Mis Oportunidades',
-      icon: (
-        <Search
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
-        />
-      ),
-      path: '/oportunidades',
-    },
-    {
-      name: 'Mis Conexiones',
-      icon: (
-        <Users
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
-        />
-      ),
-      path: '/conexiones',
-    },
-    {
-      name: 'Mis Sesiones',
-      icon: (
-        <Calendar
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
-        />
-      ),
-      path: '/sesiones',
-    },
-    {
-      name: 'Mensajes',
-      icon: (
-        <MessageCircle
-          className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'}`}
-        />
-      ),
-      path: '/mensajes',
-    },
-  ];
-
-  const menuItems =
-    userType === 'mentor' ? menuItemsMentor : menuItemsEstudiante;
 
   const handleEditProfile = () => {
     navigate('/perfil?edit=true'); // Navegar con parámetro para auto-abrir modal
@@ -183,7 +130,7 @@ const Sidebar = () => {
   const MobileMenuButton = () => (
     <button
       onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      className="md:hidden fixed top-20 left-4 z-50 bg-theme-button-primary hover:bg-theme-button-primary/90 rounded-lg p-2.5 shadow-lg border-0 transition-all"
+      className="md:hidden fixed top-20 right-4 z-50 bg-theme-button-primary hover:bg-theme-button-primary/90 rounded-lg p-2.5 shadow-lg border-0 transition-all"
     >
       {isMobileMenuOpen ? (
         <X className="w-5 h-5 text-white" />
@@ -192,53 +139,38 @@ const Sidebar = () => {
       )}
     </button>
   );
-
-  // Overlay para mobile
-  const MobileOverlay = () =>
-    isMobileMenuOpen && (
-      <div
-        className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-        onClick={() => setIsMobileMenuOpen(false)}
-      />
-    );
-
+  // ${isMobileMenuOpen && isMobile ? 'translate-x-0' : '-translate-x-full'}
   return (
     <>
       {/* Botón de toggle para mobile */}
       <MobileMenuButton />
-
-      {/* Overlay para mobile */}
-      <MobileOverlay />
-
       {/* Sidebar - Ancho aumentado para acomodar iconos grandes */}
+      <div
+        className={`md:hidden fixed inset-0 ${isMobileMenuOpen && 'bg-black/80'} z-40`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
       <aside
         className={`
-          bg-white flex flex-col transition-all duration-300 ease-in-out z-50
-          ${
-            isMobile
-              ? `fixed inset-y-0 left-0 w-80 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} h-full`
-              : `w-full md:h-[calc(100vh-5rem-5rem)] ${isCollapsed ? 'md:w-20' : 'md:w-80'}`
-          }
-        `}
+          max-md:fixed max-md:h-full max-md:top-0 transform bg-white flex flex-col transition-all duration-300 ease-in-out z-50 h-[calc(100vh-4.25rem-4rem)] lg:h-[calc(100vh-4.5rem-5rem)] ${isCollapsed ? 'w-20' : 'w-80'} ${isMobile && '-translate-x-full'} ${isMobileMenuOpen && 'translate-x-0'}`}
       >
         <div className="flex flex-col p-4 flex-1">
           {/* Header del sidebar con toggle mejorado */}
           <div className="mb-[1.5rem] mt-[1.5rem]">
-            {!isCollapsed || isMobile ? (
+            {!isCollapsed ? (
               <div className="flex items-center justify-between">
                 <h1 className="text-[#5865F2] text-[1.3rem] font-bold flex-1 text-center">
                   Bienvenido {userName}
                 </h1>
                 {/* Toggle button mejorado - solo en desktop */}
-                {!isMobile && (
-                  <button
-                    onClick={() => setIsCollapsed(!isCollapsed)}
-                    className="p-2 hover:bg-blue-50 rounded-lg transition-all duration-200 ml-2 border border-blue-200 hover:border-blue-300"
-                    title="Contraer sidebar"
-                  >
-                    <PanelLeftClose className="w-4 h-4 text-[#5865F2] hover:text-[#4F46E5]" />
-                  </button>
-                )}
+                <button
+                  onClick={() => {
+                    setIsCollapsed(!isCollapsed);
+                  }}
+                  className="max-md:hidden p-2 hover:bg-blue-50 rounded-lg transition-all duration-200 ml-2 border border-blue-200 hover:border-blue-300"
+                  title="Contraer sidebar"
+                >
+                  <PanelLeftClose className="w-5 h-5 text-[#5865F2] hover:text-[#4F46E5]" />
+                </button>
               </div>
             ) : (
               // Solo toggle cuando está colapsado - mejorado
@@ -261,15 +193,10 @@ const Sidebar = () => {
                 key={index}
                 to={item.path}
                 onClick={handleMenuItemClick}
-                className={({ isActive }) =>
-                  `w-full flex items-center gap-[0.5rem] bg-transparent border-[0.025rem] border-[#E5E7EB] text-left text-gray-700 hover:bg-[#F3F4F6] text-[0.9375rem] font-bold rounded mx-auto transition-all duration-200 ${
-                    isActive ? 'bg-[#E5E7EB]' : ''
-                  } ${isCollapsed && !isMobile ? 'justify-center p-3' : 'p-[0.70rem]'}`
-                }
-                title={isCollapsed && !isMobile ? item.name : ''}
+                className="w-full flex items-center gap-[0.5rem] p-3 bg-transparent border-[0.025rem] border-[#E5E7EB] text-left text-gray-700 hover:bg-[#F3F4F6] text-[0.9375rem] font-bold rounded mx-auto transition-all duration-200"
               >
                 {item.icon}
-                {(!isCollapsed || isMobile) && (
+                {!isCollapsed && (
                   <>
                     <span>{item.name}</span>
                     {item.name === 'Mensajes' && unreadMessages > 0 && (
@@ -286,7 +213,7 @@ const Sidebar = () => {
             <div>
               <button
                 onClick={() => {
-                  if (isCollapsed && !isMobile) {
+                  if (isCollapsed) {
                     // Si está colapsado, ir directamente al perfil
                     handleGoToProfile();
                   } else {
@@ -294,17 +221,12 @@ const Sidebar = () => {
                     setShowProfileMenu(!showProfileMenu);
                   }
                 }}
-                className={`flex w-full items-center gap-[0.5rem] bg-transparent border-[0.025rem] border-[#E5E7EB] text-left text-gray-700 hover:bg-[#F3F4F6] text-[0.9375rem] font-bold rounded mx-auto transition-all duration-200 ${
-                  isCollapsed && !isMobile
-                    ? 'justify-center p-3'
-                    : 'p-[0.70rem]'
-                }`}
-                title={isCollapsed && !isMobile ? 'Mi Perfil' : ''}
+                className="flex w-fit md:w-full items-center gap-[0.5rem] p-3 bg-transparent border-[0.025rem] border-[#E5E7EB] text-left text-gray-700 hover:bg-[#F3F4F6] text-[0.9375rem] font-bold rounded mx-auto transition-all duration-200"
               >
                 <User
-                  className={`${isCollapsed && !isMobile ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'} rounded-full border border-[#000000]`}
+                  className={`${isCollapsed ? 'w-6 h-6' : 'w-[0.9375rem] h-[0.9375rem]'} rounded-full border border-[#000000]`}
                 />
-                {(!isCollapsed || isMobile) && (
+                {!isCollapsed && (
                   <>
                     <span>Mi Perfil</span>
                     <ChevronDown
@@ -317,7 +239,7 @@ const Sidebar = () => {
               </button>
 
               {/* Profile Dropdown */}
-              {showProfileMenu && (!isCollapsed || isMobile) && (
+              {showProfileMenu && !isCollapsed && (
                 <div className="mt-2 bg-gray-50 rounded shadow-md p-[0.5rem] w-[12rem] mx-auto">
                   <ButtonProfileOption
                     title="Cuenta"
@@ -348,7 +270,7 @@ const Sidebar = () => {
 
           {/* Logout Button - Ahora dentro del flex container para mejor distribución */}
           <div className="mt-4">
-            {!isCollapsed || isMobile ? (
+            {!isCollapsed ? (
               <ButtonLogout
                 title="Salir"
                 onClick={logout}
