@@ -5,15 +5,13 @@ import {
   Routes,
   Navigate,
   Outlet,
+  useLocation,
 } from 'react-router-dom';
 import Header from '../shared/components/header/Header';
 import Footer from '../shared/components/Footer';
 import SideBar from '../shared/components/SideBar';
 import Loading from '../shared/components/Loading';
 import useAuthStore from '../features/auth/store/useAuthStore';
-import DashboardPage from '../features/profiles/pages/DashboardPage';
-import OpportunityPage from '../features/opportunities/pages/OpportunityPage';
-import SessionsPage from '../features/sessions/pages/SessionsPage';
 
 // Lazy load de las páginas
 const HomePage = lazy(() => import('../shared/pages/HomePage'));
@@ -22,61 +20,58 @@ const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'));
 const ProfilePage = lazy(
   () => import('../features/profiles/pages/ProfilePage')
 );
+const DashboardPage = lazy(
+  () => import('../features/profiles/pages/DashboardPage')
+);
+const OpportunityPage = lazy(
+  () => import('../features/opportunities/pages/OpportunityPage')
+);
+const SessionsPage = lazy(
+  () => import('../features/sessions/pages/SessionsPage')
+);
 const NotFoundPage = lazy(() => import('../shared/pages/NotFoundPage'));
 
-// Componente para rutas privadas
-const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isInitialized, getIsAuthenticated } = useAuthStore();
+// Hook para inicializar autenticación
+const useAuthInitialization = () => {
+  const { isInitialized, getIsAuthenticated } = useAuthStore();
 
   useEffect(() => {
     if (!isInitialized) {
-      getIsAuthenticated();
+      getIsAuthenticated(); // Sin 'await'
     }
   }, [isInitialized, getIsAuthenticated]);
 
-  // Mostrar loading mientras inicializa
-  if (!isInitialized) {
-    return <Loading />;
-  }
-
-  return isAuthenticated ? children : <Navigate to="/" replace />;
+  return isInitialized;
 };
 
-// Componente para rutas públicas (solo redirige si estamos en páginas específicas de auth)
-const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isInitialized, getIsAuthenticated } = useAuthStore();
+// Componente para manejar rutas públicas y privadas
+const AuthRoute = ({
+  children,
+  isPrivate = false,
+}: {
+  children: React.ReactNode;
+  isPrivate?: boolean;
+}) => {
+  const { isAuthenticated } = useAuthStore();
+  const location = useLocation();
 
-  useEffect(() => {
-    if (!isInitialized) {
-      getIsAuthenticated();
-    }
-  }, [isInitialized, getIsAuthenticated]);
-
-  // Mostrar loading mientras inicializa
-  if (!isInitialized) {
-    return <Loading />;
+  // Redirigir a login si la ruta es privada y el usuario no está autenticado
+  if (isPrivate && !isAuthenticated) {
+    return <Navigate to="/" replace />;
   }
 
-  // Solo redirigir al panel si estamos en las páginas de login o registro
-  // y el usuario ya está autenticado
-  const currentPath = window.location.pathname;
-  const authPages = ['/iniciar-sesion', '/registrarse'];
-
-  if (isAuthenticated && authPages.includes(currentPath)) {
+  // Redirigir al dashboard si la ruta es pública y el usuario está autenticado
+  const authPages = ['/iniciar-sesion', '/registrarse', '/'];
+  if (!isPrivate && isAuthenticated && authPages.includes(location.pathname)) {
     return <Navigate to="/panel" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
+// Layout compartido
 const Layout = () => {
-  const { isAuthenticated, isInitialized, getIsAuthenticated } = useAuthStore();
-
-  useEffect(() => {
-    if (!isInitialized) {
-      getIsAuthenticated();
-    }
-  }, [isInitialized, getIsAuthenticated]);
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <div className="flex flex-col h-screen relative z-40">
@@ -85,7 +80,6 @@ const Layout = () => {
         <div className="flex-1 flex h-[calc(100vh-4.25rem-4rem)] md:h-[calc(100vh-4.5rem-5rem)]">
           {isAuthenticated && <SideBar />}
           <main className="max-h-full w-full">
-            {/* paginas privadas */}
             <Outlet />
           </main>
         </div>
@@ -97,16 +91,8 @@ const Layout = () => {
 
 // Configuración de rutas principales
 const AppRouter = () => {
-  const { isInitialized, getIsAuthenticated } = useAuthStore();
+  const isInitialized = useAuthInitialization();
 
-  // Inicializar el estado de autenticación al cargar la app
-  useEffect(() => {
-    if (!isInitialized) {
-      getIsAuthenticated();
-    }
-  }, [isInitialized, getIsAuthenticated]);
-
-  // Mostrar loading mientras inicializa la app
   if (!isInitialized) {
     return <Loading />;
   }
@@ -114,23 +100,26 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rutas públicas */}
         <Route
           path="/"
           element={
-            <PublicRoute>
+            <AuthRoute>
               <Layout />
-            </PublicRoute>
+            </AuthRoute>
           }
         >
           <Route index element={<HomePage />} />
           <Route path="/iniciar-sesion" element={<LoginPage />} />
           <Route path="/registrarse" element={<RegisterPage />} />
         </Route>
+
+        {/* Rutas privadas */}
         <Route
           element={
-            <PrivateRoute>
+            <AuthRoute isPrivate>
               <Layout />
-            </PrivateRoute>
+            </AuthRoute>
           }
         >
           <Route path="/panel" index element={<DashboardPage />} />
@@ -138,6 +127,8 @@ const AppRouter = () => {
           <Route path="/oportunidades" element={<OpportunityPage />} />
           <Route path="/sesiones" element={<SessionsPage />} />
         </Route>
+
+        {/* Ruta no encontrada */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
