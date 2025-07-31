@@ -6,7 +6,6 @@ import ContactSection from '../components/ContactSection';
 import ExperienceSection from '../components/ExperienceSection';
 import InterestsSection from '../components/InterestsSection';
 import MentoringSpecialtiesSection from '../components/MentoringSpecialtiesSection';
-import LearningGoalsSection from '../components/LearningGoalsSection';
 import Breadcrumb from '../../../shared/components/Breadcrumb';
 import useAuthStore from '../../auth/store/useAuthStore';
 import { useMyProfile } from '../hooks/useProfile';
@@ -53,10 +52,9 @@ const ProfilePage = () => {
   const displayProfile: UserProfile = isProfileEmpty
     ? {
         id: user?.id || '',
-        name: profile?.name || user?.name || '',
+        name: profile?.fullname || user?.fullname || '',
         email: '',
-        role: user?.role || 'ROLE_USER',
-        avatar: user?.avatar || null,
+        avatar: profile?.image || user?.image || '',
         bio: '',
         location: '',
         ocupation: '',
@@ -100,10 +98,8 @@ const ProfilePage = () => {
                 ¡Bienvenido a SkillLink!
               </h3>
               <p className="text-blue-800 text-sm">
-                Completa tu perfil para conectar con{' '}
-                {user?.role === 'ROLE_MENTOR' ? 'estudiantes' : 'mentores'},
-                encontrar oportunidades y mostrar tus habilidades a la
-                comunidad.
+                Completa tu perfil para conectar con otros usuarios, encontrar
+                oportunidades y mostrar tus habilidades a la comunidad.
               </p>
             </div>
           </div>
@@ -131,17 +127,10 @@ const ProfilePage = () => {
               <SkillsSection profile={displayProfile} />
 
               {/* Secciones específicas por rol */}
-              {user?.role === 'ROLE_MENTOR' ? (
-                <>
-                  <ExperienceSection profile={displayProfile} />
-                  <MentoringSpecialtiesSection profile={displayProfile} />
-                </>
-              ) : (
-                <>
-                  <LearningGoalsSection profile={displayProfile} />
-                  <ExperienceSection profile={displayProfile} />
-                </>
-              )}
+              <>
+                <ExperienceSection profile={displayProfile} />
+                <MentoringSpecialtiesSection profile={displayProfile} />
+              </>
             </div>
           </div>
         </div>
