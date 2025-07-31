@@ -10,16 +10,11 @@ interface ProfileHeaderProps {
 const ProfileHeader = ({ profile, onEditClick }: ProfileHeaderProps) => {
   const { user } = useAuthStore();
 
-  const displayName = user?.name || profile.name || 'Usuario';
-
-  // El rol siempre viene correcto del backend/useAuthStore
-  const isStudent = user?.role === 'ROLE_USER';
-  const isMentor = user?.role === 'ROLE_MENTOR';
-  const roleDisplayText = isMentor ? 'Mentor' : 'Estudiante';
+  const displayName = user?.fullname || profile.fullname || 'Usuario';
 
   // Función para obtener la URL del avatar de forma segura
   const getAvatarSrc = (): string | undefined => {
-    return user?.avatar || profile.avatar || undefined;
+    return user?.image || profile.avatar || undefined;
   };
 
   const avatarSrc = getAvatarSrc();
@@ -54,17 +49,6 @@ const ProfileHeader = ({ profile, onEditClick }: ProfileHeaderProps) => {
               {profile.ocupation}
             </p>
           )}
-
-          {/* Role Badge */}
-          <span
-            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium font-Inter ${
-              isStudent
-                ? 'bg-blue-100 text-blue-700 border border-blue-200'
-                : 'bg-green-100 text-green-700 border border-green-200'
-            }`}
-          >
-            {roleDisplayText}
-          </span>
         </div>
 
         {/* Botón Editar perfil */}
