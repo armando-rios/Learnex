@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { Bell, Settings, User, ChevronDown } from 'lucide-react';
+import { Bell, Settings, ChevronDown, Menu, X } from 'lucide-react';
 import useAuthStore from '../../../features/auth/store/useAuthStore';
 import { useState } from 'react';
+import { useSidebar } from '../SidebarContext';
 
 interface DashboardHeaderProps {
   onEditProfile?: () => void;
 }
 
 const DashboardHeader = ({ onEditProfile }: DashboardHeaderProps) => {
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useSidebar();
   const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const DashboardHeader = ({ onEditProfile }: DashboardHeaderProps) => {
           </button>
 
           {/* User Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 md:gap-4">
             {/* Notifications */}
             <button className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300">
               <Bell className="w-5 h-5" />
@@ -53,16 +55,20 @@ const DashboardHeader = ({ onEditProfile }: DashboardHeaderProps) => {
             <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-3 px-3 py-2 text-white hover:bg-white/10 rounded-lg transition-all duration-300"
+                className="flex items-center gap-3 px-3 py-2 text-white hover:bg-white/10 rounded-lg transition-all duration-300  max-md:p-2"
               >
                 <div className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  <span className="font-medium">
+                  <img
+                    src={user?.image}
+                    alt="Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="max-md:hidden font-medium">
                     {user?.fullname || 'Usuario'}
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                  className={`max-md:hidden w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
                 />
               </button>
 
@@ -103,6 +109,20 @@ const DashboardHeader = ({ onEditProfile }: DashboardHeaderProps) => {
                 </div>
               )}
             </div>
+            {/* Botón de menú para pantallas pequeñas */}
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+                console.log(isMobileMenuOpen);
+              }}
+              className="md:hidden flex items-center gap-3 p-2 text-white hover:bg-white/10 rounded-lg transition-all duration-300"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 text-white" />
+              ) : (
+                <Menu className="w-5 h-5 text-white" />
+              )}
+            </button>
           </div>
         </div>
       </div>

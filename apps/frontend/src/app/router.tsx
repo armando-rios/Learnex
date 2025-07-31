@@ -12,6 +12,7 @@ import Footer from '../shared/components/Footer';
 import SideBar from '../shared/components/SideBar';
 import Loading from '../shared/components/Loading';
 import useAuthStore from '../features/auth/store/useAuthStore';
+import { SidebarProvider } from '../shared/components/SidebarContext';
 
 // Lazy load de las páginas
 const HomePage = lazy(() => import('../shared/pages/HomePage'));
@@ -118,7 +119,9 @@ const AppRouter = () => {
         <Route
           element={
             <AuthRoute isPrivate>
-              <Layout />
+              <SidebarProvider>
+                <Layout />
+              </SidebarProvider>
             </AuthRoute>
           }
         >

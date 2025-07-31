@@ -13,18 +13,17 @@ import {
   Bell,
   Settings,
   LogOut,
-  Menu,
-  X,
   PanelLeftClose,
   PanelLeftOpen,
 } from 'lucide-react';
 
 import useAuthStore from '../../features/auth/store/useAuthStore';
 import { ButtonLogout, ButtonProfileOption } from './Button';
+import { useSidebar } from './SidebarContext';
 
 const Sidebar = () => {
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useSidebar();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { user, logout } = useAuthStore();
@@ -47,7 +46,7 @@ const Sidebar = () => {
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+  }, [setIsMobileMenuOpen]);
 
   const userName = user?.fullname;
 
@@ -126,24 +125,8 @@ const Sidebar = () => {
     }
   };
 
-  // Botón de toggle para mobile - Mejorado y más visible
-  const MobileMenuButton = () => (
-    <button
-      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      className="md:hidden fixed top-20 right-4 z-50 bg-theme-button-primary hover:bg-theme-button-primary/90 rounded-lg p-2.5 shadow-lg border-0 transition-all"
-    >
-      {isMobileMenuOpen ? (
-        <X className="w-5 h-5 text-white" />
-      ) : (
-        <Menu className="w-5 h-5 text-white" />
-      )}
-    </button>
-  );
-  // ${isMobileMenuOpen && isMobile ? 'translate-x-0' : '-translate-x-full'}
   return (
     <>
-      {/* Botón de toggle para mobile */}
-      <MobileMenuButton />
       {/* Sidebar - Ancho aumentado para acomodar iconos grandes */}
       <div
         className={`md:hidden fixed inset-0 ${isMobileMenuOpen && 'bg-black/80'} z-40`}
