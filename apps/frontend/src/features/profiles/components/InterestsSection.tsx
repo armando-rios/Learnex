@@ -1,13 +1,11 @@
-import useAuthStore from '../../auth/store/useAuthStore';
 import type { UserProfile } from '../services/profileService';
+import { Sparkles } from 'lucide-react';
 
 interface InterestsSectionProps {
   profile: UserProfile | undefined;
 }
 
 const InterestsSection = ({ profile }: InterestsSectionProps) => {
-  const { user } = useAuthStore();
-  const isStudent = user?.role === 'ROLE_USER';
   const isEmpty =
     !profile?.interests ||
     profile.interests.length === 0 ||
@@ -112,29 +110,21 @@ const InterestsSection = ({ profile }: InterestsSectionProps) => {
         <div className="text-center py-8 text-gray-400">
           <div className="mb-4">
             <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
-              <span className="text-2xl">✨</span>
+              <span className="text-2xl">
+                <Sparkles />
+              </span>
             </div>
           </div>
-          {isStudent ? (
-            <>
-              <p className="text-sm">
-                Comparte qué te interesa aprender para conectar con mentores
-                afines.
-              </p>
-              <p className="text-xs mt-2">
-                React, Primer empleo, Frontend development, etc.
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="text-sm">
-                Comparte en qué temas puedes ayudar como mentor.
-              </p>
-              <p className="text-xs mt-2">
-                Transición de carrera, Entrevistas técnicas, Liderazgo, etc.
-              </p>
-            </>
-          )}
+          <div>
+            <p className="text-sm">
+              No has agregado intereses aún. ¡Empieza a explorar y añadir tus
+              pasiones!
+            </p>
+            <p className="text-xs mt-2">
+              Puedes agregar intereses relacionados con tu carrera, tecnología,
+              habilidades blandas y más.
+            </p>
+          </div>
         </div>
       ) : (
         <div className="flex flex-wrap gap-2">
