@@ -1,15 +1,11 @@
 import { Building2 } from 'lucide-react';
 import type { UserProfile } from '../services/profileService';
-import useAuthStore from '../../auth/store/useAuthStore';
 
 interface ExperienceSectionProps {
   profile: UserProfile | undefined;
 }
 
 const ExperienceSection = ({ profile }: ExperienceSectionProps) => {
-  const { user } = useAuthStore();
-  const isStudent = user?.role === 'ROLE_USER';
-
   // Manejar tanto strings como arrays de experiencia
   const experienceArray = Array.isArray(profile?.experience)
     ? profile?.experience
@@ -39,26 +35,14 @@ const ExperienceSection = ({ profile }: ExperienceSectionProps) => {
               <Building2 className="w-8 h-8 text-gray-400" />
             </div>
           </div>
-          {isStudent ? (
-            <>
-              <p className="text-sm">
-                Comparte tu experiencia académica, proyectos escolares o
-                prácticas profesionales.
-              </p>
-              <p className="text-xs mt-2">
-                Proyectos universitarios, prácticas, trabajos de medio tiempo...
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="text-sm">
-                Comparte tu experiencia laboral y trayectoria profesional.
-              </p>
-              <p className="text-xs mt-2">
-                Empresas donde has trabajado, roles, proyectos destacados...
-              </p>
-            </>
-          )}
+          <div>
+            <p className="text-sm">
+              Comparte tu experiencia laboral y trayectoria profesional.
+            </p>
+            <p className="text-xs mt-2">
+              Empresas donde has trabajado, roles, proyectos destacados...
+            </p>
+          </div>
         </div>
       ) : (
         <div className="space-y-4">
