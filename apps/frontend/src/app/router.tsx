@@ -133,7 +133,7 @@ const AppRouter = () => {
             </PrivateRoute>
           }
         >
-          <Route path="/panel" element={<DashboardPage />} />
+          <Route path="/panel" index element={<DashboardPage />} />
           <Route path="/perfil" element={<ProfilePage />} />
           <Route path="/oportunidades" element={<OpportunityPage />} />
           <Route path="/sesiones" element={<SessionsPage />} />
