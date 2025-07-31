@@ -1,14 +1,11 @@
 import type { UserProfile } from '../services/profileService';
-import useAuthStore from '../../auth/store/useAuthStore';
 
 interface AboutSectionProps {
   profile: UserProfile | undefined;
 }
 
 const AboutSection = ({ profile }: AboutSectionProps) => {
-  const { user } = useAuthStore();
   const isEmpty = !profile?.bio || profile.bio.trim() === '';
-  const isStudent = user?.role === 'ROLE_USER';
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-5 mb-4 font-Inter">
@@ -23,9 +20,8 @@ const AboutSection = ({ profile }: AboutSectionProps) => {
               Completa tu biografía para que otros puedan conocerte mejor.
             </p>
             <p className="text-xs mt-2">
-              {isStudent
-                ? 'Cuéntanos sobre tus intereses académicos, proyectos que has desarrollado o tecnologías que te emocionan.'
-                : 'Comparte tu experiencia profesional, especialidades y cómo puedes ayudar a estudiantes.'}
+              Comparte tus intereses, experiencia y lo que te apasiona. Esto
+              ayudará a otros a entender quién eres y cómo puedes colaborar.
             </p>
           </div>
         ) : (
