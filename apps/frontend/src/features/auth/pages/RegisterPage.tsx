@@ -1,5 +1,5 @@
 import { ButtonPrimary } from '../../../shared/components/Button';
-import AuthLayout from '../components/AuthLayout';
+import AuthFormLayout from '../components/AuthFormLayout';
 import InputField from '../components/InputField';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -31,11 +31,11 @@ const RegisterPage = () => {
   });
 
   return (
-    <AuthLayout
+    <AuthFormLayout
       title="Regístrate"
       description="Crea una cuenta para desbloquear funciones exclusivas."
       image="/images/ilustracion-register.svg"
-      showBackButton={false}
+      showBackButton={true}
     >
       <form
         className="w-full bg-theme-bg-tertiary flex flex-col gap-4"
@@ -86,7 +86,7 @@ const RegisterPage = () => {
           </Link>
         </p>
       </form>
-    </AuthLayout>
+    </AuthFormLayout>
   );
 };
 

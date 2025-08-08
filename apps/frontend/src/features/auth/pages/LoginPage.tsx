@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import AuthLayout from '../components/AuthLayout';
+import AuthFormLayout from '../components/AuthFormLayout';
 import { ButtonPrimary } from '../../../shared/components/Button';
 import InputField from '../components/InputField';
 import { useForm } from 'react-hook-form';
@@ -31,7 +31,7 @@ const LoginPage = () => {
   });
 
   return (
-    <AuthLayout
+    <AuthFormLayout
       title="Inicia Sesión"
       description="¡Bienvenido de nuevo! Por favor, inicia sesión para acceder a tu cuenta."
       image="/images/ilustracion-login.svg"
@@ -79,7 +79,7 @@ const LoginPage = () => {
           </Link>
         </p>
       </form>
-    </AuthLayout>
+    </AuthFormLayout>
   );
 };
 
