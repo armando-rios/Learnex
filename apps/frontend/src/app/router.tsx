@@ -1,18 +1,15 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import {
   BrowserRouter,
   Route,
   Routes,
   Navigate,
-  Outlet,
   useLocation,
 } from 'react-router-dom';
-import Header from '../shared/components/header/Header';
-import Footer from '../shared/components/Footer';
-import SideBar from '../shared/components/SideBar';
-import Loading from '../shared/components/Loading';
 import useAuthStore from '../features/auth/store/useAuthStore';
-import { SidebarProvider } from '../shared/components/SidebarContext';
+import Loading from '../shared/components/Loading';
+import PublicLayout from '../shared/components/layouts/PublicLayout';
+import PrivateLayout from '../shared/components/layouts/PrivateLayout';
 
 // Lazy load de las páginas
 const HomePage = lazy(() => import('../shared/pages/HomePage'));
@@ -38,7 +35,7 @@ const useAuthInitialization = () => {
 
   useEffect(() => {
     if (!isInitialized) {
-      getIsAuthenticated(); // Sin 'await'
+      getIsAuthenticated();
     }
   }, [isInitialized, getIsAuthenticated]);
 
@@ -70,26 +67,6 @@ const AuthRoute = ({
   return <>{children}</>;
 };
 
-// Layout compartido
-const Layout = () => {
-  const { isAuthenticated } = useAuthStore();
-
-  return (
-    <div className="flex flex-col h-screen relative z-40">
-      <Header />
-      <Suspense fallback={<Loading />}>
-        <div className="flex-1 flex h-[calc(100vh-4.25rem-4rem)] md:h-[calc(100vh-4.5rem-5rem)]">
-          {isAuthenticated && <SideBar />}
-          <main className="max-h-full w-full">
-            <Outlet />
-          </main>
-        </div>
-      </Suspense>
-      <Footer />
-    </div>
-  );
-};
-
 // Configuración de rutas principales
 const AppRouter = () => {
   const isInitialized = useAuthInitialization();
@@ -106,7 +83,7 @@ const AppRouter = () => {
           path="/"
           element={
             <AuthRoute>
-              <Layout />
+              <PublicLayout />
             </AuthRoute>
           }
         >
@@ -119,9 +96,7 @@ const AppRouter = () => {
         <Route
           element={
             <AuthRoute isPrivate>
-              <SidebarProvider>
-                <Layout />
-              </SidebarProvider>
+              <PrivateLayout />
             </AuthRoute>
           }
         >
