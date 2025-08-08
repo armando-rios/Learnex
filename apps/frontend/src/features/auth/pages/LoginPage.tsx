@@ -37,10 +37,7 @@ const LoginPage = () => {
       image="/images/ilustracion-login.svg"
       showBackButton={true}
     >
-      <form
-        className="w-full bg-theme-bg-tertiary flex flex-col gap-4"
-        onSubmit={onSubmit}
-      >
+      <form className="w-full flex flex-col gap-4" onSubmit={onSubmit}>
         <InputField
           label="Email o Nombre de Usuario"
           type="text"

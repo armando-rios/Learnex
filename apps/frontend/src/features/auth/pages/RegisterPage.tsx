@@ -37,10 +37,7 @@ const RegisterPage = () => {
       image="/images/ilustracion-register.svg"
       showBackButton={true}
     >
-      <form
-        className="w-full bg-theme-bg-tertiary flex flex-col gap-4"
-        onSubmit={onSubmit}
-      >
+      <form className="w-full flex flex-col gap-4" onSubmit={onSubmit}>
         <InputField
           label="Nombre de Usuario"
           type="text"
