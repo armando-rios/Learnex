@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthFormLayout from '../components/AuthFormLayout';
 import { ButtonPrimary } from '../../../shared/components/Button';
 import InputField from '../components/InputField';
@@ -11,6 +11,7 @@ import useAuthStore from '../store/useAuthStore';
 
 const LoginPage = () => {
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -24,6 +25,9 @@ const LoginPage = () => {
     try {
       const response = await loginService(data);
       setAuthenticated(response);
+      
+      // Redirigir automáticamente al dashboard después del login exitoso
+      navigate('/panel');
     } catch (error) {
       console.error('Error during login:', error);
       alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');

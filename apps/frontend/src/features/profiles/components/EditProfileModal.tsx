@@ -229,7 +229,7 @@ const EditProfileModal = ({
         contactEmail: data.contactEmail,
         contactPhone: data.contactPhone || '',
         ocupation: data.ocupation || '',
-        name: profile.name || user?.name || '',
+        fullName: profile.fullName || user?.fullName || '',
         countryId: profile.countryId || '',
         certifications: profile.certifications || [],
         password: '',
@@ -463,23 +463,13 @@ const EditProfileModal = ({
             {(section === 'all' || section === 'interests') && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  {user?.role === 'ROLE_MENTOR'
-                    ? 'Especialidades de Mentoría'
-                    : 'Objetivos de Aprendizaje'}
+                  Objetivos de Aprendizaje
                 </h3>
 
                 <div>
                   <TextareaField
-                    label={
-                      user?.role === 'ROLE_MENTOR'
-                        ? 'En qué temas puedes ayudar como mentor'
-                        : 'Qué te interesa aprender'
-                    }
-                    placeholder={
-                      user?.role === 'ROLE_MENTOR'
-                        ? 'Transición de carrera, Entrevistas técnicas, React y ecosistema, etc.'
-                        : 'Primer empleo en tech, Frontend development, React, etc.'
-                    }
+                    label="Qué te interesa aprender"
+                    placeholder="Primer empleo en tech, Frontend development, React, etc."
                     register={register('interests')}
                     error={errors.interests?.message}
                     rows={3}
@@ -487,9 +477,7 @@ const EditProfileModal = ({
                     inputBg="bg-gray-50"
                   />
                   <p className="text-sm text-gray-500 mt-1">
-                    {user?.role === 'ROLE_MENTOR'
-                      ? 'Temas en los que puedes guiar a estudiantes (Separa con comas)'
-                      : 'Temas que te motivan y quieres explorar (Separa con comas)'}
+                    Temas que te motivan y quieres explorar (Separa con comas)
                   </p>
 
                   {/* Preview de intereses con emojis dinámicos y colores consistentes */}
@@ -526,16 +514,8 @@ const EditProfileModal = ({
 
                 <div>
                   <TextareaField
-                    label={
-                      user?.role === 'ROLE_MENTOR'
-                        ? 'Experiencia profesional'
-                        : 'Experiencia académica y proyectos'
-                    }
-                    placeholder={
-                      user?.role === 'ROLE_MENTOR'
-                        ? 'Empresas donde has trabajado, roles, proyectos destacados...'
-                        : 'Proyectos universitarios, prácticas, trabajos de medio tiempo...'
-                    }
+                    label="Experiencia académica y proyectos"
+                    placeholder="Proyectos universitarios, prácticas, trabajos de medio tiempo..."
                     register={register('experience')}
                     error={errors.experience?.message}
                     rows={4}

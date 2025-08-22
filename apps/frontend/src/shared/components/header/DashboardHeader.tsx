@@ -59,12 +59,19 @@ const DashboardHeader = ({ onEditProfile }: DashboardHeaderProps) => {
               >
                 <div className="flex items-center gap-2">
                   <img
-                    src={user?.image}
+                    src={
+                      user?.imageUrl ||
+                      'https://ui-avatars.com/api/?name=U&background=random&size=32'
+                    }
                     alt="Avatar"
                     className="w-8 h-8 rounded-full"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        'https://ui-avatars.com/api/?name=U&background=random&size=32';
+                    }}
                   />
                   <span className="max-md:hidden font-medium">
-                    {user?.fullname || 'Usuario'}
+                    {user?.fullName || 'Usuario'}
                   </span>
                 </div>
                 <ChevronDown
@@ -113,7 +120,6 @@ const DashboardHeader = ({ onEditProfile }: DashboardHeaderProps) => {
             <button
               onClick={() => {
                 setIsMobileMenuOpen(!isMobileMenuOpen);
-                console.log(isMobileMenuOpen);
               }}
               className="md:hidden flex items-center gap-3 p-2 text-white hover:bg-white/10 rounded-lg transition-all duration-300"
             >

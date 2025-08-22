@@ -17,16 +17,14 @@ export interface UserProfile {
   contactPhone: string;
   countryId: string;
   certifications: string[];
-  name: string;
+  fullName: string;
   password: string;
-  imageUrl: string;
+  imageUrl?: string;
   achievements?: string[];
 
   // Campos adicionales para compatibilidad con componentes
   id?: string;
   email?: string;
-  avatar?: string | null;
-  role?: string;
   rating?: number;
   reviewsCount?: number;
 }

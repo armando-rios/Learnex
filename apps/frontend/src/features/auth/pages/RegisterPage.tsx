@@ -1,7 +1,7 @@
 import { ButtonPrimary } from '../../../shared/components/Button';
 import AuthFormLayout from '../components/AuthFormLayout';
 import InputField from '../components/InputField';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema } from '../validation/validationSchemas';
@@ -11,6 +11,7 @@ import useAuthStore from '../store/useAuthStore';
 
 const RegisterPage = () => {
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -24,6 +25,9 @@ const RegisterPage = () => {
     try {
       const response = await registerService(data);
       setAuthenticated(response);
+
+      // Redirigir automáticamente al dashboard después del registro exitoso
+      navigate('/panel');
     } catch (error) {
       console.error('Error durante el registro:', error);
       alert('Error al registrarse. Por favor, verifica tus datos.');
@@ -51,8 +55,8 @@ const RegisterPage = () => {
           label="Nombre Completo"
           type="text"
           placeholder="Ingresa tu nombre completo"
-          register={register('fullname', { required: true })}
-          error={errors.fullname?.message}
+          register={register('fullName', { required: true })}
+          error={errors.fullName?.message}
           labelColor="text-white"
           inputBg="bg-white"
         />

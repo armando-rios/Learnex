@@ -13,8 +13,10 @@ export async function loginService(userData: LoginFormData) {
       login: userData.identifier,
       password: userData.password,
     });
+    
     localStorage.setItem('authToken', response.data.token);
     localStorage.setItem('userData', JSON.stringify(response.data.user));
+    
     return response.data.user;
   } catch (error) {
     console.error('Error de inicio de sesión:', error);
@@ -26,10 +28,8 @@ export async function loginService(userData: LoginFormData) {
 export async function registerService(userData: RegisterFormData) {
   const finalData = registerSchema.parse(userData);
   try {
-    // Paso 1: Registrar el usuario
     const response = await api.post('/auth/register', finalData);
-
-    // Verificar que el registro fue exitoso (status 200 o 201)
+    
     localStorage.setItem('authToken', response.data.token);
     localStorage.setItem('userData', JSON.stringify(response.data.user));
 

@@ -10,11 +10,11 @@ interface ProfileHeaderProps {
 const ProfileHeader = ({ profile, onEditClick }: ProfileHeaderProps) => {
   const { user } = useAuthStore();
 
-  const displayName = user?.fullname || profile.fullname || 'Usuario';
+  const displayName = user?.fullName || profile.fullName || 'Usuario';
 
   // Función para obtener la URL del avatar de forma segura
   const getAvatarSrc = (): string | undefined => {
-    return user?.image || profile.avatar || undefined;
+    return user?.imageUrl || profile.imageUrl || undefined;
   };
 
   const avatarSrc = getAvatarSrc();

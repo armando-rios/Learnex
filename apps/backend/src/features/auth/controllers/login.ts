@@ -23,10 +23,10 @@ export const login = async (req: Request, res: Response) => {
     return res.status(200).json({
       user: {
         id: user._id,
-        fullname: user.fullname,
+        fullName: user.fullName,
         username: user.username,
         email: user.email,
-        image: user.image,
+        imageUrl: user.imageUrl,
       },
       token: generateToken(user._id),
     });

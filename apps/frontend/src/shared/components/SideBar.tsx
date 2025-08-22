@@ -48,7 +48,7 @@ const Sidebar = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, [setIsMobileMenuOpen]);
 
-  const userName = user?.fullname;
+  const userName = user?.fullName;
 
   const menuItems = [
     {

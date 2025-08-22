@@ -12,10 +12,10 @@ interface AuthState {
 
 interface User {
   id: string;
-  fullname: string;
+  fullName: string;
   username: string;
   email: string;
-  image?: string;
+  imageUrl?: string;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
@@ -24,11 +24,24 @@ const useAuthStore = create<AuthState>((set) => ({
   getIsAuthenticated: () => {
     const userData = localStorage.getItem('userData');
     const token = localStorage.getItem('authToken');
-    set(() => ({
-      user: JSON.parse(userData || 'null'),
-      isAuthenticated: !!token,
-      isInitialized: true,
-    }));
+    
+    if (!token) {
+      set(() => ({ isAuthenticated: false, user: null, isInitialized: true }));
+      return;
+    }
+    
+    try {
+      const parsedUser = userData ? JSON.parse(userData) : null;
+      
+      set(() => ({
+        user: parsedUser,
+        isAuthenticated: !!token,
+        isInitialized: true,
+      }));
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      set(() => ({ isAuthenticated: false, user: null, isInitialized: true }));
+    }
   },
   user: null,
   setAuthenticated: (userData: User) => {

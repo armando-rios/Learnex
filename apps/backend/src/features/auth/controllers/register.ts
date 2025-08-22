@@ -5,7 +5,7 @@ import Profile from '../../../shared/models/Profile';
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { fullname, username, email, password } = req.body;
+    const { fullName, username, email, password } = req.body;
 
     const existingUser = await User.findOne({
       $or: [{ email }, { username }],
@@ -18,11 +18,11 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const newUser = await User.create({
-      fullname,
+      fullName,
       username,
       email,
       password,
-      image: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullname)}&background=random&size=128`,
+      imageUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=random&size=128`,
     });
 
     if (!newUser) {
@@ -33,18 +33,31 @@ export const register = async (req: Request, res: Response) => {
 
     await Profile.create({
       userId: newUser._id,
-      fullname: newUser.fullname,
+      fullName: newUser.fullName,
       username: newUser.username,
-      image: newUser.image,
+      imageUrl: newUser.imageUrl,
     });
 
     return res.status(201).json({
       user: {
         id: newUser._id,
-        fullname: newUser.fullname,
+        fullName: newUser.fullName,
         username: newUser.username,
         email: newUser.email,
-        image: newUser.image,
+        imageUrl: newUser.imageUrl,
+        bio: '',
+        location: '',
+        ocupation: '',
+        experience: '',
+        skills: [],
+        interests: [],
+        socialLinks: { linkedin: '', github: '' },
+        contactEmail: '',
+        contactPhone: '',
+        countryId: '',
+        certifications: [],
+        password: '',
+        achievements: [],
       },
       token,
       message: 'User created successfully',
@@ -52,6 +65,7 @@ export const register = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(500).json({
       message: (error as Error).message,
+      error: process.env.NODE_ENV === 'development' ? error : undefined,
     });
   }
 };

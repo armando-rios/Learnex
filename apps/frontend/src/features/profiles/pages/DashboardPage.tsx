@@ -102,7 +102,7 @@ const DashboardPage = () => {
     setTimeout(() => setLoading(false), 800);
   }, []);
 
-  const userName = user?.fullname || 'Usuario';
+  const userName = user?.fullName || 'Usuario';
 
   if (loading) {
     return (

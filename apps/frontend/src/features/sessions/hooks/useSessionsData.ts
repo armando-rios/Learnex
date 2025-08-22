@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import useAuthStore from '../../auth/store/useAuthStore';
 
 export interface SessionData {
   id: number;
@@ -27,9 +26,9 @@ export interface SessionData {
 }
 
 export const useSessionsData = () => {
-  const { user } = useAuthStore();
-  const isStudent = user?.role === 'ROLE_USER';
-  const isMentor = user?.role === 'ROLE_MENTOR';
+  // Por ahora todos los usuarios son estudiantes
+  const isStudent = true;
+  const isMentor = false;
 
   // Mock data para estudiantes
   const MOCK_STUDENT_SESSIONS: SessionData[] = [

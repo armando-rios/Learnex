@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   getAllOpportunitiesService,
-  getMentorOpportunitiesService,
   type Opportunity,
 } from '../services/opportunityService';
 import useAuthStore from '../../auth/store/useAuthStore';
@@ -29,14 +28,8 @@ export const useOpportunities = (): UseOpportunitiesReturn => {
       setLoading(true);
       setError(null);
 
-      let data: Opportunity[];
-      if (user.role === 'ROLE_USER') {
-        data = await getAllOpportunitiesService();
-      } else if (user.role === 'ROLE_MENTOR') {
-        data = await getMentorOpportunitiesService();
-      } else {
-        data = [];
-      }
+      // Por ahora todos los usuarios ven todas las oportunidades
+      const data: Opportunity[] = await getAllOpportunitiesService();
 
       setOpportunities(data);
     } catch (err) {
@@ -51,7 +44,7 @@ export const useOpportunities = (): UseOpportunitiesReturn => {
 
   useEffect(() => {
     fetchOpportunities();
-  }, [user?.role]);
+  }, [user]);
 
   return {
     opportunities,

@@ -8,7 +8,7 @@ const profileSchema = new Schema<IProfile>(
       ref: 'User',
       required: true,
     },
-    fullname: {
+    fullName: {
       type: String,
       required: [true, 'Por favor ingrese un nombre'],
     },
@@ -23,8 +23,50 @@ const profileSchema = new Schema<IProfile>(
         'El nombre de usuario solo puede contener letras, números y guiones bajos',
       ],
     },
-    image: {
+    imageUrl: {
       type: String,
+    },
+    bio: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },
+    ocupation: {
+      type: String,
+    },
+    experience: {
+      type: String,
+    },
+    skills: {
+      type: [String],
+    },
+    interests: {
+      type: [String],
+    },
+    socialLinks: {
+      type: {
+        linkedin: String,
+        github: String,
+      },
+    },
+    contactEmail: {
+      type: String,
+    },
+    contactPhone: {
+      type: String,
+    },
+    countryId: {
+      type: String,
+    },
+    certifications: {
+      type: [String],
+    },
+    password: {
+      type: String,
+    },
+    achievements: {
+      type: [String],
     },
   },
   {

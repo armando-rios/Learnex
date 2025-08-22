@@ -4,7 +4,7 @@ import { IUser } from '../interfaces/IUser';
 
 const userSchema = new Schema<IUser>(
   {
-    fullname: {
+    fullName: {
       type: String,
       required: [true, 'Por favor ingrese un nombre'],
     },
@@ -30,7 +30,7 @@ const userSchema = new Schema<IUser>(
       minlength: [6, 'La contraseña debe tener al menos 6 caracteres'],
       required: [true, 'Por favor ingrese una contraseña'],
     },
-    image: {
+    imageUrl: {
       type: String,
     },
   },

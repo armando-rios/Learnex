@@ -52,9 +52,9 @@ const ProfilePage = () => {
   const displayProfile: UserProfile = isProfileEmpty
     ? {
         id: user?.id || '',
-        name: profile?.fullname || user?.fullname || '',
+        fullName: profile?.fullName || user?.fullName || '',
         email: '',
-        avatar: profile?.image || user?.image || '',
+        imageUrl: profile?.imageUrl || user?.imageUrl || '',
         bio: '',
         location: '',
         ocupation: '',
@@ -67,7 +67,6 @@ const ProfilePage = () => {
         countryId: '',
         certifications: [],
         password: '',
-        imageUrl: '',
         achievements: [],
       }
     : {
