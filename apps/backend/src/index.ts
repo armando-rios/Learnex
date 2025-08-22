@@ -3,6 +3,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import authRoutes from './features/auth/routes/auth';
+import profileRoutes from './features/profile/routes/profile';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { authMiddleware } from './shared/middleware/authMiddleware';
 import greetRoutes from './features/greet/routes/greet';
@@ -53,6 +54,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+app.use('/api/profile', authMiddleware, profileRoutes);
 app.use('/api/greet', authMiddleware, greetRoutes);
 
 app.listen(PORT, () => {
