@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
+import cookikeParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import authRoutes from './features/auth/routes/auth';
 import swaggerJsdoc from 'swagger-jsdoc';
@@ -50,7 +51,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 connectDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    credentials: true, // Allow cookies to be sent
+  }),
+);
+app.use(cookikeParser());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use(authMiddleware);
