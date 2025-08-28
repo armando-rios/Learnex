@@ -1,5 +1,6 @@
 // src/features/auth/store/useAuthStore.ts
 import { create } from 'zustand';
+import api from '../../../shared/lib/axios';
 
 interface AuthState {
   getIsAuthenticated: () => void;
@@ -21,14 +22,34 @@ interface User {
 const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   isInitialized: false,
-  getIsAuthenticated: () => {
-    const userData = localStorage.getItem('userData');
-    const token = localStorage.getItem('authToken');
-    set(() => ({
-      user: JSON.parse(userData || 'null'),
-      isAuthenticated: !!token,
-      isInitialized: true,
-    }));
+  getIsAuthenticated: async () => {
+    // Primero verificamos si hay un indicador en localStorage
+    const hasAttemptedLogin = localStorage.getItem('hasAttemptedLogin');
+
+    if (!hasAttemptedLogin) {
+      set(() => ({
+        user: null,
+        isAuthenticated: false,
+        isInitialized: true,
+      }));
+      return;
+    }
+
+    try {
+      const response = await api.get('/auth/verify');
+      set(() => ({
+        user: response.data.user,
+        isAuthenticated: true,
+        isInitialized: true,
+      }));
+    } catch {
+      localStorage.removeItem('hasAttemptedLogin');
+      set(() => ({
+        user: null,
+        isAuthenticated: false,
+        isInitialized: true,
+      }));
+    }
   },
   user: null,
   setAuthenticated: (userData: User) => {
@@ -38,10 +59,14 @@ const useAuthStore = create<AuthState>((set) => ({
       isInitialized: true,
     }));
   },
-  logout: () => {
-    set({ isAuthenticated: false, user: null, isInitialized: true });
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
+  logout: async () => {
+    await api.post('/auth/logout'); // Endpoint para limpiar la cookie
+    localStorage.removeItem('hasAttemptedLogin');
+    set({
+      isAuthenticated: false,
+      user: null,
+      isInitialized: true,
+    });
   },
 }));
 

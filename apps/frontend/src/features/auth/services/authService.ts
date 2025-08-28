@@ -7,13 +7,10 @@ import { loginSchema, registerSchema } from '../validation/validationSchemas';
 
 // Función para iniciar sesión
 export async function loginService(userData: LoginFormData) {
-  loginSchema.parse(userData);
+  const finalData = loginSchema.parse(userData);
   try {
-    const response = await api.post('/auth/login', {
-      login: userData.identifier,
-      password: userData.password,
-    });
-    localStorage.setItem('authToken', response.data.token);
+    const response = await api.post('/auth/login', finalData);
+    localStorage.setItem('hasAttemptedLogin', 'true');
     localStorage.setItem('userData', JSON.stringify(response.data.user));
     return response.data.user;
   } catch (error) {
@@ -28,11 +25,8 @@ export async function registerService(userData: RegisterFormData) {
   try {
     // Paso 1: Registrar el usuario
     const response = await api.post('/auth/register', finalData);
-
-    // Verificar que el registro fue exitoso (status 200 o 201)
-    localStorage.setItem('authToken', response.data.token);
+    localStorage.setItem('hasAttemptedLogin', 'true');
     localStorage.setItem('userData', JSON.stringify(response.data.user));
-
     return response.data.user;
   } catch (error) {
     console.error('Error de registro:', error);
