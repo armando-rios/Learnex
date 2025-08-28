@@ -38,6 +38,13 @@ export const register = async (req: Request, res: Response) => {
       image: newUser.image,
     });
 
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     return res.status(201).json({
       user: {
         id: newUser._id,
@@ -46,7 +53,6 @@ export const register = async (req: Request, res: Response) => {
         email: newUser.email,
         image: newUser.image,
       },
-      token,
       message: 'User created successfully',
     });
   } catch (error) {

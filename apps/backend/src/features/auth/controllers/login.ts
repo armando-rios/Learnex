@@ -20,6 +20,17 @@ export const login = async (req: Request, res: Response) => {
       throw new Error('Invalid password');
     }
 
+    const token = generateToken(user._id);
+
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    console.log('User logged in:', user.username);
+
     return res.status(200).json({
       user: {
         id: user._id,
@@ -28,7 +39,6 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
         image: user.image,
       },
-      token: generateToken(user._id),
     });
   } catch (error) {
     return res.status(500).json({
