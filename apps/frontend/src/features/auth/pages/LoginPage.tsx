@@ -42,8 +42,8 @@ const LoginPage = () => {
           label="Email o Nombre de Usuario"
           type="text"
           placeholder="Ingresa tu Email o Nombre de Usuario"
-          register={register('identifier')}
-          error={errors.identifier?.message}
+          register={register('login')}
+          error={errors.login?.message}
           labelColor="text-white"
           inputBg="bg-white"
         />
