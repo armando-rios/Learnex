@@ -1,16 +1,9 @@
 {
+  "extends": "@learnex/typescript-config/node.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "commonjs",
-    "rootDir": "./src",
     "outDir": "./build",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
-  }
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"]
 }
