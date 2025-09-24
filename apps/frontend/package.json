@@ -1,33 +1,33 @@
 {
   "name": "frontend",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "typecheck": "tsc -b --noEmit",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\""
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.1.1",
-    "@tanstack/react-query": "^5.80.7",
-    "axios": "^1.10.0",
-    "lucide-react": "^0.515.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-hook-form": "^7.58.0",
-    "react-router-dom": "^7.6.2",
-    "zod": "^3.25.64",
-    "zustand": "^5.0.5"
+    "next": "16.0.6",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.10",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "@vitejs/plugin-react-swc": "^3.9.0",
-    "tailwindcss": "^4.1.10",
-    "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+    "@learnex/eslint-config": "*",
+    "@learnex/typescript-config": "*",
+    "@learnex/prettier-config": "*",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "prettier": "^3.0.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
