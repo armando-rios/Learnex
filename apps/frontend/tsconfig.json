@@ -1,5 +1,11 @@
 {
   "extends": "@learnex/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",

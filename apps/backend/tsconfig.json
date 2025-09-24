@@ -1,8 +1,12 @@
 {
   "extends": "@learnex/typescript-config/node.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./build",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]
