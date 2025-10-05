@@ -3,3 +3,70 @@
 :root {
   color-scheme: dark;
 }
+
+@theme {
+  --color-theme-base: var(--color-theme-base);
+  --color-theme-mantle: var(--color-theme-mantle);
+  --color-theme-crust: var(--color-theme-crust);
+  --color-theme-text: var(--color-theme-text);
+  --color-theme-subtext1: var(--color-theme-subtext1);
+  --color-theme-subtext0: var(--color-theme-subtext0);
+  --color-theme-overlay2: var(--color-theme-overlay2);
+  --color-theme-overlay1: var(--color-theme-overlay1);
+  --color-theme-overlay0: var(--color-theme-overlay0);
+  --color-theme-rosewater: var(--color-theme-rosewater);
+  --color-theme-flamingo: var(--color-theme-flamingo);
+  --color-theme-pink: var(--color-theme-pink);
+  --color-theme-mauve: var(--color-theme-mauve);
+  --color-theme-red: var(--color-theme-red);
+  --color-theme-maroon: var(--color-theme-maroon);
+  --color-theme-peach: var(--color-theme-peach);
+  --color-theme-yellow: var(--color-theme-yellow);
+  --color-theme-green: var(--color-theme-green);
+  --color-theme-teal: var(--color-theme-teal);
+  --color-theme-sky: var(--color-theme-sky);
+  --color-theme-sapphire: var(--color-theme-sapphire);
+  --color-theme-blue: var(--color-theme-blue);
+  --color-theme-lavender: var(--color-theme-lavender);
+  --color-theme-surface2: var(--color-theme-surface2);
+  --color-theme-surface1: var(--color-theme-surface1);
+  --color-theme-surface0: var(--color-theme-surface0);
+}
+
+.catppuccin {
+  /* Main Backgrounds */
+  --color-theme-base: #1e1e2e;
+  --color-theme-mantle: #181825;
+  --color-theme-crust: #11111b;
+
+  /* Text Colors */
+  --color-theme-text: #cdd6f4;
+  --color-theme-subtext1: #bac2de;
+  --color-theme-subtext0: #a6adcb;
+
+  /* Overlay Colors (for cards, modals, etc.) */
+  --color-theme-overlay2: #313244;
+  --color-theme-overlay1: #45475a;
+  --color-theme-overlay0: #585b70;
+
+  /* Highlight/Accent Colors */
+  --color-theme-rosewater: #f5e0dc; /* Pinkish accent */
+  --color-theme-flamingo: #f2cdcd; /* Lighter pink */
+  --color-theme-pink: #f5c2e7;
+  --color-theme-mauve: #cba6f7;
+  --color-theme-red: #f38ba8;
+  --color-theme-maroon: #eba0ac;
+  --color-theme-peach: #fab387;
+  --color-theme-yellow: #f9e2af;
+  --color-theme-green: #a6e3a1;
+  --color-theme-teal: #94e2d5;
+  --color-theme-sky: #89dceb;
+  --color-theme-sapphire: #74c7ec;
+  --color-theme-blue: #89b4fa;
+  --color-theme-lavender: #b4befe;
+
+  /* Surface Colors (for input fields, subtle borders) */
+  --color-theme-surface2: #6c7086;
+  --color-theme-surface1: #7f849c;
+  --color-theme-surface0: #9399b2;
+}
