@@ -1,7 +1,8 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import User from '../models/User';
-import { Request, Response, NextFunction } from 'express';
-import { IUser } from '../interfaces/IUser';
+import jwt from 'jsonwebtoken';
+import type { JwtPayload } from 'jsonwebtoken';
+import type { Request, Response, NextFunction } from 'express';
+import type { IUser } from '@/shared/interfaces/IUser';
+import { userRepository } from '@/shared/repositories';
 
 interface AuthenticatedRequest extends Request {
   user?: IUser;
@@ -23,7 +24,16 @@ export const authMiddleware = async (
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    req.user = await User.findById(decoded.id).select('-password');
+    const user = await userRepository.findById(decoded.id);
+
+    if (!user) {
+      res.status(401).json({
+        message: 'User not found',
+      });
+      throw new Error('User not found');
+    }
+
+    req.user = user;
     next();
   } catch (error) {
     res.status(401).json({
