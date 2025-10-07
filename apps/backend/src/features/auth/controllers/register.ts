@@ -1,15 +1,12 @@
-import { Request, Response } from 'express';
-import User from '../../../shared/models/User';
+import type { Request, Response } from 'express';
+import { userRepository, profileRepository } from '@/shared/repositories';
 import { generateToken } from '../utils/generateToken';
-import Profile from '../../../shared/models/Profile';
 
 export const register = async (req: Request, res: Response) => {
   try {
     const { fullname, username, email, password } = req.body;
 
-    const existingUser = await User.findOne({
-      $or: [{ email }, { username }],
-    });
+    const existingUser = await userRepository.existsByEmailOrUsername(email, username);
 
     if (existingUser) {
       return res.status(400).json({
@@ -17,7 +14,7 @@ export const register = async (req: Request, res: Response) => {
       });
     }
 
-    const newUser = await User.create({
+    const newUser = await userRepository.create({
       fullname,
       username,
       email,
@@ -29,10 +26,10 @@ export const register = async (req: Request, res: Response) => {
       throw new Error('User not created');
     }
 
-    const token = generateToken(newUser._id);
+    const token = generateToken(newUser.id);
 
-    await Profile.create({
-      userId: newUser._id,
+    await profileRepository.create({
+      userId: newUser.id,
       fullname: newUser.fullname,
       username: newUser.username,
       image: newUser.image,
@@ -47,7 +44,7 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(201).json({
       user: {
-        id: newUser._id,
+        id: newUser.id,
         fullname: newUser.fullname,
         username: newUser.username,
         email: newUser.email,
