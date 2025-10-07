@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../../../shared/models/User';
+import { userRepository } from '@/shared/repositories';
 
 export const verify = async (req: Request, res: Response) => {
   try {
@@ -12,7 +12,7 @@ export const verify = async (req: Request, res: Response) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
 
-    const user = await User.findById(decoded.id).select('-password');
+    const user = await userRepository.findById(decoded.id);
 
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
@@ -20,7 +20,7 @@ export const verify = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       user: {
-        id: user._id,
+        id: user.id,
         fullname: user.fullname,
         username: user.username,
         email: user.email,
