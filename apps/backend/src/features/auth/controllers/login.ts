@@ -1,26 +1,26 @@
-import { Request, Response } from 'express';
-import User from '../../../shared/models/User';
+import type { Request, Response } from 'express';
+import { userRepository } from '@/shared/repositories';
 import { generateToken } from '../utils/generateToken';
 
 export const login = async (req: Request, res: Response) => {
   try {
     const { login, password } = req.body;
 
-    const user = await User.findOne({
-      $or: [{ email: login }, { username: login }],
-    });
+    console.log({ login, password });
+
+    const user = await userRepository.findByEmailOrUsername(login);
 
     if (!user) {
       throw new Error('User not found');
     }
 
-    const isMatch = await user.comparePassword(password);
+    const isMatch = await userRepository.verifyPassword(user, password);
 
     if (!isMatch) {
       throw new Error('Invalid password');
     }
 
-    const token = generateToken(user._id);
+    const token = generateToken(user.id);
 
     res.cookie('authToken', token, {
       httpOnly: true,
@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       user: {
-        id: user._id,
+        id: user.id,
         fullname: user.fullname,
         username: user.username,
         email: user.email,
