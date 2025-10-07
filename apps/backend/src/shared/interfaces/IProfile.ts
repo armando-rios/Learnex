@@ -1,8 +1,9 @@
-import { Document, ObjectId } from 'mongoose';
-
-export interface IProfile extends Document {
-  _id: ObjectId;
-  userId: ObjectId;
+/**
+ * Entidad de Profile - Independiente de la base de datos
+ */
+export interface IProfile {
+  id: string;
+  userId: string;
   fullname: string;
   username: string;
   image?: string;

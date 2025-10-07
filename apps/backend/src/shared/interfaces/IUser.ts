@@ -1,7 +1,8 @@
-import { Document, ObjectId } from 'mongoose';
-
-export interface IUser extends Document {
-  _id: ObjectId;
+/**
+ * Entidad de Usuario - Independiente de la base de datos
+ */
+export interface IUser {
+  id: string;
   fullname: string;
   username: string;
   email: string;
@@ -9,5 +10,4 @@ export interface IUser extends Document {
   image?: string;
   createdAt: Date;
   updatedAt: Date;
-  comparePassword(enteredPassword: string): Promise<boolean>;
 }

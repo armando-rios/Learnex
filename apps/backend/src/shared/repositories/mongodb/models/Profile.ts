@@ -1,7 +1,15 @@
-import { Schema, model } from 'mongoose';
-import { IProfile } from '../interfaces/IProfile';
+import { Schema, model, Document } from 'mongoose';
 
-const profileSchema = new Schema<IProfile>(
+export interface IProfileDocument extends Document {
+  userId: Schema.Types.ObjectId;
+  fullname: string;
+  username: string;
+  image?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const profileSchema = new Schema<IProfileDocument>(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -32,6 +40,6 @@ const profileSchema = new Schema<IProfile>(
   },
 );
 
-const Profile = model<IProfile>('Profile', profileSchema);
+const ProfileModel = model<IProfileDocument>('Profile', profileSchema);
 
-export default Profile;
+export default ProfileModel;

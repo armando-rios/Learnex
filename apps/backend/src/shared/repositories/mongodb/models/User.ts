@@ -1,8 +1,17 @@
-import { Schema, model } from 'mongoose';
-import bcrypt from 'bcrypt';
-import { IUser } from '../interfaces/IUser';
+import { Schema, model, Document } from 'mongoose';
 
-const userSchema = new Schema<IUser>(
+export interface IUserDocument extends Document {
+  fullname: string;
+  username: string;
+  email: string;
+  password: string;
+  image?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  comparePassword(enteredPassword: string): Promise<boolean>;
+}
+
+const userSchema = new Schema<IUserDocument>(
   {
     fullname: {
       type: String,
@@ -44,8 +53,10 @@ userSchema.pre('save', async function (next) {
     next();
   }
   try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await Bun.password.hash(this.password, {
+      algorithm: 'bcrypt',
+      cost: 12,
+    });
     next();
   } catch (error) {
     next(error as Error);
@@ -53,9 +64,9 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods.comparePassword = async function (enteredPassword: string): Promise<boolean> {
-  return await bcrypt.compare(enteredPassword, this.password);
+  return await Bun.password.verify(enteredPassword, this.password, 'bcrypt');
 };
 
-const User = model('User', userSchema);
+const UserModel = model<IUserDocument>('User', userSchema);
 
-export default User;
+export default UserModel;
